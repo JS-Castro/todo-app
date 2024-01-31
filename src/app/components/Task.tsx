@@ -4,7 +4,7 @@ import { FiEdit, FiTrash2 } from "react-icons/fi";
 import { ITask } from "../../../types/tasks";
 import { FormEventHandler, useState } from "react";
 import AddTaskModal from "./AddTaskModal";
-import { editTodo } from "../api/api";
+import { deleteTodo, editTodo } from "../api/api";
 
 interface TaskProps {
   task: ITask;
@@ -12,17 +12,21 @@ interface TaskProps {
 
 const Task: React.FC<TaskProps> = ({ task }) => {
   const [openModalEdit, setOpenModalEdit] = useState<boolean>(false);
-  const [modalDeleted, setModalDeleted] = useState<boolean>(false);
+  const [openModalDelete, setOpenModalDelete] = useState<boolean>(false);
   const [taskToEdit, setTaskToEdit] = useState<string>(task.text);
 
-  const handleSubmit: FormEventHandler<HTMLFormElement> = async (e) => {
+  const handleSubmitTaskEdit: FormEventHandler<HTMLFormElement> = async (e) => {
     e.preventDefault();
     await editTodo({
       id: task.id,
       text: taskToEdit,
     });
-    setTaskToEdit("");
     setOpenModalEdit(false);
+  };
+
+  const handleSubmitTaskDelete = async (taskId: string) => {
+    await deleteTodo(taskId);
+    setOpenModalDelete(false);
   };
 
   return (
@@ -36,7 +40,7 @@ const Task: React.FC<TaskProps> = ({ task }) => {
           size={25}
         />
         <AddTaskModal modalOpen={openModalEdit} setModalOpen={setOpenModalEdit}>
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={handleSubmitTaskEdit}>
             <h3 className="font-bold text-lg">Edit todo</h3>
             <div className="modal-action">
               <input
@@ -52,7 +56,20 @@ const Task: React.FC<TaskProps> = ({ task }) => {
             </div>
           </form>
         </AddTaskModal>
-        <FiTrash2 cursor="pointer" className="text-red-500" size={25} />
+        <FiTrash2
+          onClick={() => setOpenModalDelete(true)}
+          cursor="pointer"
+          className="text-red-500"
+          size={25}
+        />
+        <AddTaskModal modalOpen={openModalDelete} setModalOpen={setOpenModalDelete}>
+          <h3 className="text-lg">Are you sure, you want to delete this task?</h3>
+          <div className="modal-action">
+            <button className="btn" onClick={() => handleSubmitTaskDelete(task.id)}>
+              Yes
+            </button>
+          </div>
+        </AddTaskModal>
       </td>
     </tr>
   );

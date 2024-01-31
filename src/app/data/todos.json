@@ -1,20 +1,12 @@
 {
   "tasks": [
     {
-      "id": "1",
-      "text": "buy milk with some orange"
-    },
-    {
       "id": "2",
-      "text": "go shooping"
+      "text": "go shooping edited 2"
     },
     {
       "id": "4",
       "text": "do dinner"
-    },
-    {
-      "id": "af0f335e-82f9-4684-a17d-8a499743765f",
-      "text": "learn math"
     }
   ]
 }
