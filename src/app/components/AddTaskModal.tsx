@@ -1,9 +1,10 @@
 interface AddTaskModalProps {
   modalOpen: boolean;
-  setModalOpen: (open: boolean) => boolean;
+  setModalOpen: (open: boolean) => boolean | void;
+  children: React.ReactNode;
 }
 
-const AddTaskModal: React.FC<AddTaskModalProps> = ({ modalOpen, setModalOpen }) => {
+const AddTaskModal: React.FC<AddTaskModalProps> = ({ modalOpen, setModalOpen, children }) => {
   return (
     <>
       <dialog id="my_modal_3" className={`modal ${modalOpen ? "modal-open" : ""}`}>
@@ -16,8 +17,7 @@ const AddTaskModal: React.FC<AddTaskModalProps> = ({ modalOpen, setModalOpen }) 
               ✕
             </button>
           </form>
-          <h3 className="font-bold text-lg">Hello!</h3>
-          <p className="py-4">Press ESC key or click on ✕ button to close</p>
+          {children}
         </div>
       </dialog>
     </>
