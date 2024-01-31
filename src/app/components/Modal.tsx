@@ -1,10 +1,10 @@
-interface AddTaskModalProps {
+interface ModalProps {
   modalOpen: boolean;
   setModalOpen: (open: boolean) => boolean | void;
   children: React.ReactNode;
 }
 
-const AddTaskModal: React.FC<AddTaskModalProps> = ({ modalOpen, setModalOpen, children }) => {
+const Modal: React.FC<ModalProps> = ({ modalOpen, setModalOpen, children }) => {
   return (
     <>
       <dialog id="my_modal_3" className={`modal ${modalOpen ? "modal-open" : ""}`}>
@@ -24,4 +24,4 @@ const AddTaskModal: React.FC<AddTaskModalProps> = ({ modalOpen, setModalOpen, ch
   );
 };
 
-export default AddTaskModal;
+export default Modal;

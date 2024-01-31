@@ -3,7 +3,7 @@
 import { FiEdit, FiTrash2 } from "react-icons/fi";
 import { ITask } from "../../../types/tasks";
 import { FormEventHandler, useState } from "react";
-import AddTaskModal from "./AddTaskModal";
+import Modal from "./Modal";
 import { deleteTodo, editTodo } from "../api/api";
 
 interface TaskProps {
@@ -39,7 +39,7 @@ const Task: React.FC<TaskProps> = ({ task }) => {
           className="text-blue-500"
           size={25}
         />
-        <AddTaskModal modalOpen={openModalEdit} setModalOpen={setOpenModalEdit}>
+        <Modal modalOpen={openModalEdit} setModalOpen={setOpenModalEdit}>
           <form onSubmit={handleSubmitTaskEdit}>
             <h3 className="font-bold text-lg">Edit todo</h3>
             <div className="modal-action">
@@ -55,21 +55,21 @@ const Task: React.FC<TaskProps> = ({ task }) => {
               </button>
             </div>
           </form>
-        </AddTaskModal>
+        </Modal>
         <FiTrash2
           onClick={() => setOpenModalDelete(true)}
           cursor="pointer"
           className="text-red-500"
           size={25}
         />
-        <AddTaskModal modalOpen={openModalDelete} setModalOpen={setOpenModalDelete}>
+        <Modal modalOpen={openModalDelete} setModalOpen={setOpenModalDelete}>
           <h3 className="text-lg">Are you sure, you want to delete this task?</h3>
           <div className="modal-action">
             <button className="btn" onClick={() => handleSubmitTaskDelete(task.id)}>
               Yes
             </button>
           </div>
-        </AddTaskModal>
+        </Modal>
       </td>
     </tr>
   );

@@ -3,7 +3,7 @@
 import React, { FormEventHandler, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import { AiOutlinePlus } from "react-icons/ai";
-import AddTaskModal from "./AddTaskModal";
+import Modal from "./Modal";
 import { addTodo } from "../api/api";
 
 const AddTask = () => {
@@ -25,7 +25,7 @@ const AddTask = () => {
       <button onClick={() => setModalOpen(true)} className="btn btn-primary w-full">
         Add new Task <AiOutlinePlus className="ml-2" size={18} />
       </button>
-      <AddTaskModal modalOpen={modalOpen} setModalOpen={setModalOpen}>
+      <Modal modalOpen={modalOpen} setModalOpen={setModalOpen}>
         <form onSubmit={handleSubmit}>
           <h3 className="font-bold text-lg">Add new todo</h3>
           <div className="modal-action">
@@ -41,7 +41,7 @@ const AddTask = () => {
             </button>
           </div>
         </form>
-      </AddTaskModal>
+      </Modal>
     </div>
   );
 };
