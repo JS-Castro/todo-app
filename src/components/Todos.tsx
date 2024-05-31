@@ -1,9 +1,14 @@
 import TodoItem from "./TodoItem";
-import { useTodoContext } from "../context/TodoContext";
+import { ITodo } from "../types/todos";
 
-const Todos = () => {
-  const { todos, editTodo, deleteTodo, toggleEditMode } = useTodoContext();
+interface TodosProps {
+  todos: ITodo[];
+  handleEdit: (id: string, value: string) => void;
+  handleDelete: (id: string) => void;
+  handleToggleEditMode: (id: string) => void;
+}
 
+const Todos = ({ todos, handleEdit, handleDelete, handleToggleEditMode }: TodosProps) => {
   if (todos.length === 0) {
     return <p>You have no todos</p>;
   }
@@ -16,9 +21,9 @@ const Todos = () => {
           id={todo.id}
           value={todo.value}
           editable={todo.editable}
-          handleDelete={deleteTodo}
-          handleEdit={editTodo}
-          handleToggleEditMode={toggleEditMode}
+          handleDelete={handleDelete}
+          handleEdit={handleEdit}
+          handleToggleEditMode={handleToggleEditMode}
         />
       ))}
     </ul>

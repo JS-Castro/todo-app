@@ -1,13 +1,15 @@
 import React, { useState } from "react";
-import { useTodoContext } from "../context/TodoContext";
 
-const TodoForm = () => {
+interface EditTodoProps {
+  handleAdd: (value: string) => void;
+}
+
+const TodoForm = ({ handleAdd }: EditTodoProps) => {
   const [value, setValue] = useState("");
-  const { addTodo } = useTodoContext();
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    addTodo(value);
+    handleAdd(value);
     setValue("");
   };
 

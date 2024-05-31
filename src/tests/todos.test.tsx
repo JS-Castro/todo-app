@@ -1,27 +1,21 @@
 import { render, screen } from "@testing-library/react";
 import Todos from "../components/Todos";
-import { TodoProvider } from "../context/TodoContext";
 import { TTodos } from "../types/todos";
 
 describe("Todos", () => {
-  function renderTodoProvider({ todos }: { todos: TTodos }) {
+  function renderTodo({ todos }: { todos: TTodos }) {
     return (
-      <TodoProvider
-        value={{
-          todos: todos,
-          addTodo: () => {},
-          editTodo: () => {},
-          deleteTodo: () => {},
-          toggleEditMode: () => {},
-        }}
-      >
-        <Todos />
-      </TodoProvider>
+      <Todos
+        todos={todos}
+        handleDelete={jest.fn()}
+        handleEdit={jest.fn()}
+        handleToggleEditMode={jest.fn()}
+      />
     );
   }
 
   it("should render an empty list when no todos are provided", () => {
-    render(renderTodoProvider({ todos: [] }));
+    render(renderTodo({ todos: [] }));
 
     expect(screen.getByText("You have no todos")).toBeInTheDocument();
   });
@@ -32,7 +26,7 @@ describe("Todos", () => {
       { id: "2", value: "todo 2", editable: false },
     ];
 
-    render(renderTodoProvider({ todos }));
+    render(renderTodo({ todos }));
 
     expect(screen.getAllByText(/todo \d/i)).toHaveLength(2);
   });
@@ -51,7 +45,7 @@ describe("Todos", () => {
       },
     ];
 
-    render(renderTodoProvider({ todos }));
+    render(renderTodo({ todos }));
 
     const editableTodo = screen.getByDisplayValue("todo 1");
     expect(editableTodo).toBeInTheDocument();

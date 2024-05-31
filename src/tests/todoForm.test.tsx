@@ -6,7 +6,7 @@ describe("TodoForm", () => {
   it("should render input field and add todo button", () => {
     render(
       <TodoProvider>
-        <TodoForm />
+        <TodoForm handleAdd={jest.fn()} />
       </TodoProvider>
     );
 
@@ -17,7 +17,7 @@ describe("TodoForm", () => {
   it("should update input value when typing", () => {
     render(
       <TodoProvider>
-        <TodoForm />
+        <TodoForm handleAdd={jest.fn()} />
       </TodoProvider>
     );
 
@@ -30,7 +30,7 @@ describe("TodoForm", () => {
   it("should clear input value after adding todo", () => {
     render(
       <TodoProvider>
-        <TodoForm />
+        <TodoForm handleAdd={jest.fn()} />
       </TodoProvider>
     );
 
