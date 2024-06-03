@@ -5,10 +5,10 @@ import { useTodoContext } from "../context/TodoContext";
 const UseFetch = (url: string) => {
   const { setItems, setLoading, setMessage } = useTodoContext();
 
-  const fetchTodos = useCallback(async (url: string) => {
+  const fetchTodos = useCallback(async (url: string, signal: AbortSignal) => {
     setLoading(true);
 
-    await fetch(url)
+    await fetch(url, { signal })
       .then((res) => res.json())
       .then((data: any) => {
         setItems(data);
@@ -28,7 +28,14 @@ const UseFetch = (url: string) => {
   }, []);
 
   useEffect(() => {
-    fetchTodos(url);
+    const abortController = new AbortController();
+    const signal = abortController.signal;
+
+    fetchTodos(url, signal);
+
+    return () => {
+      abortController.abort();
+    };
   }, [fetchTodos, url]);
 };
 
