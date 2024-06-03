@@ -90,6 +90,7 @@ export const TodoProvider = ({
 
   const addTodo = async (todo: ITodo) => {
     dispatch({ type: "SET_LOADING", payload: { loading: true } });
+
     try {
       await fetch("https://ardanis.com/api/todo", {
         method: "POST",
@@ -109,6 +110,7 @@ export const TodoProvider = ({
 
   const editTodo = async (id: string, value: string) => {
     dispatch({ type: "SET_LOADING", payload: { loading: true } });
+
     try {
       const response = await fetch(`https://ardanis.com/api/todo/${id}`, {
         method: "PUT",

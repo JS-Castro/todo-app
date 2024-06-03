@@ -1,6 +1,7 @@
 import { useState } from "react";
 import EditTodo from "./EditTodo";
 import Button from "./Button";
+import Loading from "./Loading";
 
 interface TodoItemProps {
   id: string;
@@ -36,7 +37,7 @@ const TodoItem = ({
   };
 
   if (isLoading) {
-    return <p>Loading...</p>;
+    return <Loading />;
   }
 
   return (

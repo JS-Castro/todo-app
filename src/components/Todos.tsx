@@ -1,5 +1,6 @@
 import TodoItem from "./TodoItem";
 import { ITodo } from "../types/todos";
+import Loading from "./Loading";
 
 interface TodosProps {
   todos: ITodo[];
@@ -21,7 +22,7 @@ const Todos = ({
   }
 
   if (isLoading) {
-    return <p>Loading...</p>;
+    return <Loading />;
   }
 
   return (
