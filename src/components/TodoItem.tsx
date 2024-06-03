@@ -6,6 +6,7 @@ interface TodoItemProps {
   id: string;
   value: string;
   editable: boolean;
+  isLoading: boolean;
   handleDelete: (id: string) => void;
   handleEdit: (id: string, value: string) => void;
   handleToggleEditMode: (id: string) => void;
@@ -15,6 +16,7 @@ const TodoItem = ({
   id,
   value,
   editable,
+  isLoading,
   handleDelete,
   handleEdit,
   handleToggleEditMode,
@@ -32,6 +34,10 @@ const TodoItem = ({
     handleToggleEditMode(id);
     setIsEditable(true);
   };
+
+  if (isLoading) {
+    return <p>Loading...</p>;
+  }
 
   return (
     <li>

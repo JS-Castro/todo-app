@@ -1,15 +1,11 @@
 import IMessage from "../types/message";
 
-const Alert = ({ message, shouldShow }: IMessage) => {
+const Alert = ({ text, shouldShow }: IMessage) => {
   if (shouldShow === false) {
     return <></>;
   }
 
-  return (
-    <div>
-      <span>{message}</span>
-    </div>
-  );
+  return <span>{text}</span>;
 };
 
 export default Alert;

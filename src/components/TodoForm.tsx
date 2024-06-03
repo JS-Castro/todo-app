@@ -9,6 +9,7 @@ const TodoForm = ({ handleAdd }: EditTodoProps) => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    if (value === "") return;
     handleAdd(value);
     setValue("");
   };

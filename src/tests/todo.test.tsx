@@ -15,6 +15,7 @@ describe("TodoItem", () => {
         handleDelete={mockHandleDelete}
         handleEdit={mockHandleEdit}
         handleToggleEditMode={mockHandleToggleEditMode}
+        isLoading={false}
       />
     );
   };

@@ -6,6 +6,7 @@ describe("Todos", () => {
   function renderTodo({ todos }: { todos: TTodos }) {
     return (
       <Todos
+        isLoading={false}
         todos={todos}
         handleDelete={jest.fn()}
         handleEdit={jest.fn()}

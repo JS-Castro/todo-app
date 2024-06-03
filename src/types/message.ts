@@ -1,4 +1,4 @@
 export default interface IMessage {
-  message: string;
+  text: string;
   shouldShow: boolean;
 }

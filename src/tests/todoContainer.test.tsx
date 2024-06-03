@@ -1,6 +1,4 @@
 import { render, screen } from "@testing-library/react";
-import { http, HttpResponse } from "msw";
-import { setupWorker } from "msw/browser";
 import TodoContainer from "../containers/TodoContainer";
 import { TodoContextState, TodoProvider } from "../context/TodoContext";
 import { ITodo } from "../types/todos";
@@ -13,30 +11,15 @@ describe("TodoContainer", () => {
   ];
 
   const message: IMessage = {
-    message: "",
+    text: "",
     shouldShow: false,
   };
 
   const state: TodoContextState = {
     todos,
     message,
+    loading: false,
   };
-
-  const worker = setupWorker(
-    http.get("https://github.com/octocat", ({ request, params, cookies }) => {
-      return HttpResponse.json(
-        {
-          message: "Mocked response",
-        },
-        {
-          status: 202,
-          statusText: "Mocked status",
-        }
-      );
-    })
-  );
-
-  worker.start();
 
   it("should render TodoForm and Todos components within TodoProvider", () => {
     render(
@@ -49,6 +32,7 @@ describe("TodoContainer", () => {
           toggleEditMode: () => {},
           setMessage: () => {},
           setItems: () => {},
+          setLoading: () => {},
         }}
       >
         <TodoContainer />

@@ -1,30 +1,25 @@
 import Todos from "../components/Todos";
 import TodoForm from "../components/TodoForm";
 import { useTodoContext } from "../context/TodoContext";
-import Alert from "../components/Alert";
-// import { useEffect } from "react";
+import { v4 as uuidv4 } from "uuid";
+import UseFetch from "../hooks/useFetch";
 
 const TodoContainer = () => {
   const {
-    state: { todos, message },
+    state: { todos, message, loading },
     addTodo,
     editTodo,
     deleteTodo,
     toggleEditMode,
-    // setItems,
-    // setMessage,
   } = useTodoContext();
-
-  // useEffect(() => {
-  // fetch("https://ardanis.com/api/todos")
-  //   .then((res) => res.json())
-  //   .then((data) => {
-  //     setItems(data);
-  //   });
-  // }, []);
+  UseFetch("https://ardanis.com/api/todos");
 
   const handleAddItem = (value: string) => {
-    addTodo(Date.now().toString(), value);
+    addTodo({
+      id: uuidv4(),
+      value,
+      editable: false,
+    });
   };
 
   const handleEdit = (id: string, value: string) => {
@@ -42,14 +37,18 @@ const TodoContainer = () => {
   return (
     <>
       <h1>Todo List</h1>
-      <Alert {...message} />
       <TodoForm handleAdd={handleAddItem} />
-      <Todos
-        todos={todos}
-        handleDelete={handleDelete}
-        handleEdit={handleEdit}
-        handleToggleEditMode={handleToggleEditMode}
-      />
+      {message.shouldShow ? (
+        <p>{message.text}</p>
+      ) : (
+        <Todos
+          isLoading={loading}
+          todos={todos}
+          handleDelete={handleDelete}
+          handleEdit={handleEdit}
+          handleToggleEditMode={handleToggleEditMode}
+        />
+      )}
     </>
   );
 };
