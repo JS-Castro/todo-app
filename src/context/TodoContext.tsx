@@ -2,6 +2,8 @@ import { createContext, useContext, useReducer, ReactNode } from "react";
 import { ITodo } from "../types/todos";
 import IMessage from "../types/message";
 
+const API_BASE_URL = process.env.REACT_APP_BASE_URL;
+
 type Action =
   | { type: "ADD_TODO"; payload: { todo: ITodo } }
   | { type: "EDIT_TODO"; payload: { id: string; value: string } }
@@ -87,12 +89,11 @@ export const TodoProvider = ({
   value?: TodoContextProps;
 }) => {
   const [state, dispatch] = useReducer(todoReducer, value ? value.state : initialValue);
-
   const addTodo = async (todo: ITodo) => {
     dispatch({ type: "SET_LOADING", payload: { loading: true } });
 
     try {
-      await fetch("https://ardanis.com/api/todo", {
+      await fetch(`${API_BASE_URL}/todo`, {
         method: "POST",
         body: JSON.stringify(todo),
       });
@@ -112,7 +113,7 @@ export const TodoProvider = ({
     dispatch({ type: "SET_LOADING", payload: { loading: true } });
 
     try {
-      const response = await fetch(`https://ardanis.com/api/todo/${id}`, {
+      const response = await fetch(`${API_BASE_URL}/todo/${id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -136,7 +137,7 @@ export const TodoProvider = ({
   const deleteTodo = async (id: string) => {
     dispatch({ type: "SET_LOADING", payload: { loading: true } });
     try {
-      await fetch(`https://ardanis.com/api/todo/${id}`, {
+      await fetch(`${API_BASE_URL}/todo/${id}`, {
         method: "DELETE",
       });
 
@@ -154,7 +155,7 @@ export const TodoProvider = ({
   const toggleEditMode = async (id: string) => {
     dispatch({ type: "SET_LOADING", payload: { loading: true } });
     try {
-      const response = await fetch(`https://ardanis.com/api/todo/${id}/toggle`, {
+      const response = await fetch(`${API_BASE_URL}/todo/${id}/toggle`, {
         method: "PUT",
       });
 

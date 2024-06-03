@@ -3,6 +3,9 @@ import TodoForm from "../components/TodoForm";
 import { useTodoContext } from "../context/TodoContext";
 import { v4 as uuidv4 } from "uuid";
 import UseFetch from "../hooks/useFetch";
+import { useCallback } from "react";
+
+const API_BASE_URL = process.env.REACT_APP_BASE_URL;
 
 const TodoContainer = () => {
   const {
@@ -12,27 +15,39 @@ const TodoContainer = () => {
     deleteTodo,
     toggleEditMode,
   } = useTodoContext();
-  UseFetch("https://ardanis.com/api/todos");
+  UseFetch(`${API_BASE_URL}/todos`);
 
-  const handleAddItem = (value: string) => {
-    addTodo({
-      id: uuidv4(),
-      value,
-      editable: false,
-    });
-  };
+  const handleAddItem = useCallback(
+    (value: string) => {
+      addTodo({
+        id: uuidv4(),
+        value,
+        editable: false,
+      });
+    },
+    [addTodo]
+  );
 
-  const handleEdit = (id: string, value: string) => {
-    editTodo(id, value);
-  };
+  const handleEdit = useCallback(
+    (id: string, value: string) => {
+      editTodo(id, value);
+    },
+    [editTodo]
+  );
 
-  const handleDelete = (id: string) => {
-    deleteTodo(id);
-  };
+  const handleDelete = useCallback(
+    (id: string) => {
+      deleteTodo(id);
+    },
+    [deleteTodo]
+  );
 
-  const handleToggleEditMode = (id: string) => {
-    toggleEditMode(id);
-  };
+  const handleToggleEditMode = useCallback(
+    (id: string) => {
+      toggleEditMode(id);
+    },
+    [toggleEditMode]
+  );
 
   return (
     <>
