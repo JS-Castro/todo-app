@@ -1,4 +1,5 @@
 import { http, HttpResponse } from "msw";
+import { v4 as uuidv4 } from "uuid";
 
 const API_BASE_URL = process.env.REACT_APP_BASE_URL;
 
@@ -6,12 +7,12 @@ export const handlers = [
   http.get(`${API_BASE_URL}/todos`, () => {
     return HttpResponse.json([
       {
-        id: 1,
+        id: uuidv4(),
         value: "Todo 1",
         editable: false,
       },
       {
-        id: 2,
+        id: uuidv4(),
         value: "Todo 2",
         editable: false,
       },
