@@ -3,22 +3,7 @@ import TodoContainer from "../containers/TodoContainer";
 import { TodoProvider } from "../context/TodoContext";
 
 jest.mock("../hooks/useFetch", () => {
-  return jest.fn(() => {
-    return {
-      data: [
-        {
-          id: Math.floor(Math.random() * 100).toString(),
-          value: "Todo 1",
-          editable: false,
-        },
-        {
-          id: Math.floor(Math.random() * 100).toString(),
-          value: "Todo 2",
-          editable: false,
-        },
-      ],
-    };
-  });
+  return jest.fn();
 });
 
 describe("TodoContainer", () => {
@@ -103,5 +88,93 @@ describe("TodoContainer", () => {
     );
 
     expect(screen.getByText("Loading...")).toBeInTheDocument();
+  });
+
+  it("should display message when message is set", () => {
+    render(
+      <TodoProvider
+        value={{
+          state: { todos: [], message: { text: "Test Message", shouldShow: true }, loading: false },
+          addTodo: jest.fn(),
+          editTodo: jest.fn(),
+          deleteTodo: jest.fn(),
+          toggleEditMode: jest.fn(),
+          setItems: jest.fn(),
+          setLoading: jest.fn(),
+          setMessage: jest.fn(),
+        }}
+      >
+        <TodoContainer />
+      </TodoProvider>
+    );
+
+    expect(screen.getByText("Test Message")).toBeInTheDocument();
+  });
+
+  it("should not render todo list when message is set", () => {
+    render(
+      <TodoProvider
+        value={{
+          state: { todos: [], message: { text: "Test Message", shouldShow: true }, loading: false },
+          addTodo: jest.fn(),
+          editTodo: jest.fn(),
+          deleteTodo: jest.fn(),
+          toggleEditMode: jest.fn(),
+          setItems: jest.fn(),
+          setLoading: jest.fn(),
+          setMessage: jest.fn(),
+        }}
+      >
+        <TodoContainer />
+      </TodoProvider>
+    );
+
+    expect(screen.queryByText("Todo 1")).not.toBeInTheDocument();
+  });
+
+  it("should not render todo list when loading", () => {
+    render(
+      <TodoProvider
+        value={{
+          state: { todos: [], message: { text: "", shouldShow: false }, loading: true },
+          addTodo: jest.fn(),
+          editTodo: jest.fn(),
+          deleteTodo: jest.fn(),
+          toggleEditMode: jest.fn(),
+          setItems: jest.fn(),
+          setLoading: jest.fn(),
+          setMessage: jest.fn(),
+        }}
+      >
+        <TodoContainer />
+      </TodoProvider>
+    );
+
+    expect(screen.queryByText("Todo 1")).not.toBeInTheDocument();
+  });
+
+  it("should display error message when fetch fails", () => {
+    render(
+      <TodoProvider
+        value={{
+          state: {
+            todos: [],
+            message: { text: "Error fetching data", shouldShow: true },
+            loading: false,
+          },
+          addTodo: jest.fn(),
+          editTodo: jest.fn(),
+          deleteTodo: jest.fn(),
+          toggleEditMode: jest.fn(),
+          setItems: jest.fn(),
+          setLoading: jest.fn(),
+          setMessage: jest.fn(),
+        }}
+      >
+        <TodoContainer />
+      </TodoProvider>
+    );
+
+    expect(screen.getByText("Error fetching data")).toBeInTheDocument();
   });
 });

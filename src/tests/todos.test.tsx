@@ -15,7 +15,7 @@ describe("Todos", () => {
     );
   }
 
-  it("should render an empty list when no todos are provided", () => {
+  it("should render the string, 'You have no todos', when there are not todos", () => {
     render(renderTodo({ todos: [] }));
 
     expect(screen.getByText("You have no todos")).toBeInTheDocument();

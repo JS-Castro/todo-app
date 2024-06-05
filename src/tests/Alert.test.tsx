@@ -10,20 +10,6 @@ describe("Alert Component", () => {
     expect(container).toBeEmptyDOMElement();
   });
 
-  it("should render the message when shouldShow is true", () => {
-    const props: IMessage = { text: "Test message", shouldShow: true };
-    render(<Alert {...props} />);
-
-    expect(screen.getByText("Test message")).toBeInTheDocument();
-  });
-
-  it("should not render anything when message is empty and shouldShow is false", () => {
-    const props: IMessage = { text: "", shouldShow: false };
-    const { container } = render(<Alert {...props} />);
-
-    expect(container).toBeEmptyDOMElement();
-  });
-
   it("should render an empty span when message is empty and shouldShow is true", () => {
     const props: IMessage = { text: "", shouldShow: true };
     render(<Alert {...props} />);
@@ -32,5 +18,12 @@ describe("Alert Component", () => {
     emptySpans.forEach((span) => {
       expect(span).toBeInTheDocument();
     });
+  });
+
+  it("should render the message when message is not empty and shouldShow is true", () => {
+    const props: IMessage = { text: "Test message", shouldShow: true };
+    render(<Alert {...props} />);
+
+    expect(screen.getByText("Test message")).toBeInTheDocument();
   });
 });

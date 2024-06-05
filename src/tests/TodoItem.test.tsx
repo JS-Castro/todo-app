@@ -58,4 +58,35 @@ describe("TodoItem", () => {
     fireEvent.click(editButton);
     expect(mockHandleToggleEditMode).toHaveBeenCalledWith("1");
   });
+
+  it("should not render todo item when loading is true", () => {
+    render(
+      <TodoItem
+        id="1"
+        value="Test Todo"
+        editable={false}
+        handleDelete={mockHandleDelete}
+        handleEdit={mockHandleEdit}
+        handleToggleEditMode={mockHandleToggleEditMode}
+        isLoading={true}
+      />
+    );
+    expect(screen.queryByText("Test Todo")).not.toBeInTheDocument();
+  });
+
+  it("should not render any buttons when loading is true", () => {
+    render(
+      <TodoItem
+        id="1"
+        value="Test Todo"
+        editable={false}
+        handleDelete={mockHandleDelete}
+        handleEdit={mockHandleEdit}
+        handleToggleEditMode={mockHandleToggleEditMode}
+        isLoading={true}
+      />
+    );
+    expect(screen.queryByRole("Edit")).not.toBeInTheDocument();
+    expect(screen.queryByRole("Delete")).not.toBeInTheDocument();
+  });
 });

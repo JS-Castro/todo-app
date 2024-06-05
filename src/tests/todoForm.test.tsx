@@ -37,8 +37,40 @@ describe("TodoForm", () => {
     const inputField = screen.getByRole("textbox");
     fireEvent.change(inputField, { target: { value: "Test Todo" } });
 
-    fireEvent.submit(inputField); // Submit the form by targeting the input field
+    fireEvent.submit(inputField);
 
-    expect(inputField).toHaveValue(""); // Check if input value is cleared
+    expect(inputField).toHaveValue("");
+  });
+
+  it("should call handleAdd function when submitting form", () => {
+    const handleAdd = jest.fn();
+    render(
+      <TodoProvider>
+        <TodoForm handleAdd={handleAdd} />
+      </TodoProvider>
+    );
+
+    const inputField = screen.getByRole("textbox");
+    fireEvent.change(inputField, { target: { value: "Test Todo" } });
+
+    fireEvent.submit(inputField);
+
+    expect(handleAdd).toHaveBeenCalledWith("Test Todo");
+  });
+
+  it("should not call handleAdd function when submitting form with empty input", () => {
+    const handleAdd = jest.fn();
+    render(
+      <TodoProvider>
+        <TodoForm handleAdd={handleAdd} />
+      </TodoProvider>
+    );
+
+    const inputField = screen.getByRole("textbox");
+    fireEvent.change(inputField, { target: { value: "" } });
+
+    fireEvent.submit(inputField);
+
+    expect(handleAdd).not.toHaveBeenCalled();
   });
 });

@@ -2,7 +2,7 @@
 import { useCallback, useEffect } from "react";
 import { useTodoContext } from "../context/TodoContext";
 
-const UseFetch = (url: string) => {
+const useFetch = (url: string) => {
   const { setItems, setLoading, setMessage } = useTodoContext();
 
   const fetchTodos = useCallback(async (url: string, signal: AbortSignal) => {
@@ -13,7 +13,7 @@ const UseFetch = (url: string) => {
       .then((data: any) => {
         setItems(data);
         setMessage({
-          text: "Data fetch successfully",
+          text: "Data fetched successfully",
           shouldShow: false,
         });
       })
@@ -39,4 +39,4 @@ const UseFetch = (url: string) => {
   }, [fetchTodos, url]);
 };
 
-export default UseFetch;
+export default useFetch;

@@ -2,7 +2,7 @@ import Todos from "../components/Todos";
 import TodoForm from "../components/TodoForm";
 import { useTodoContext } from "../context/TodoContext";
 import { v4 as uuidv4 } from "uuid";
-import UseFetch from "../hooks/useFetch";
+import useFetch from "../hooks/useFetch";
 import { useCallback } from "react";
 
 const API_BASE_URL = process.env.REACT_APP_BASE_URL;
@@ -15,7 +15,7 @@ const TodoContainer = () => {
     deleteTodo,
     toggleEditMode,
   } = useTodoContext();
-  UseFetch(`${API_BASE_URL}/todos`);
+  useFetch(`${API_BASE_URL}/todos`);
 
   const handleAddItem = useCallback(
     (value: string) => {
